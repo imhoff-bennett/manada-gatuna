@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 
@@ -98,6 +98,8 @@ const navItems = [
 ];
 
 function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="site-shell">
       <header className="site-header">
@@ -105,13 +107,30 @@ function App() {
           <span className="brand-mark">mg</span>
           <span>manada gatuna</span>
         </a>
-        <nav className="nav" aria-label="Navegacion principal">
+        <button
+          className={`menu-toggle ${isMenuOpen ? 'is-open' : ''}`}
+          type="button"
+          aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={isMenuOpen}
+          aria-controls="main-navigation"
+          onClick={() => setIsMenuOpen((current) => !current)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <nav
+          className={`nav ${isMenuOpen ? 'is-open' : ''}`}
+          id="main-navigation"
+          aria-label="Navegación principal"
+        >
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
               target={item.external ? '_blank' : undefined}
               rel={item.external ? 'noreferrer' : undefined}
+              onClick={() => setIsMenuOpen(false)}
             >
               {item.label}
             </a>
